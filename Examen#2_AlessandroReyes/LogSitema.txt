@@ -1,0 +1,42 @@
+                                            Log_Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 500 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}
+                                            Log_Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 500 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}
+                 Log del Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 100 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}
+                 Log del Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 100 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}
+                 Log del Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 100 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}
+                 Log del Sistema
+
+
+Usuario cliente: 11911224
+Descripcion: El cliente agrego 100 al atm y a su cuenta
+Fecha: 20/03/2020
+Hora= 22}

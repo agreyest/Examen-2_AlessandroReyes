@@ -68,15 +68,15 @@ public class Log_Sistema implements Serializable{
     @Override
     public String toString() {
         if(u){
-            return "                                            Log_Sistema\n\n\n" + 
+            return "                 Log del Sistema\n\n\n" + 
                 "Usuario cliente: "+cliente.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
                 "\nHora= " + Fecha.getHours() + '}';
         }else if (!u){
-            return "                                            Log_Sistema\n\n\n" + 
+            return "                 Log del Sistema\n\n\n" + 
                 "Usuario mantenimiento: "+ mantenimiento.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
                 "\nHora= " + Fecha.getHours() + '}';
         }
-        return "                                            Log_Sistema\n\n\n" + 
+        return "                      Log del Sistema\n\n\n" + 
                 "\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
                 "\nHora= " + Fecha.getHours() + '}';
     }

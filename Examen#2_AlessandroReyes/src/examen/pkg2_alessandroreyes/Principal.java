@@ -3,6 +3,7 @@ package examen.pkg2_alessandroreyes;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,20 +32,20 @@ public class Principal extends javax.swing.JFrame {
         a.cargarArchivo();
         atms = a.getListaATM();
         //-------------------------------------------------------------------------------------------------------------------
-        atms.add(new ATM("Tegucigalpa, Diprova", "2 años", 11911220, 1500, new Date()));
-        atms.add(new ATM("Tegucigalpa, Altia", "2 años", 11911229, 1500,new Date()));
-        atms.add(new ATM("San Pedro Sula, Altia", "2 años", 11911111, 1500,new Date()));
-        atms.add(new ATM("Tegucigalpa, City Mall", "2 años", 11911225, 1500,new Date()));
-        atms.add(new ATM("San Pedro Sula, City Mall", "2 años", 11911222, 1500,new Date()));
-        
-        Date da1, da2, da3;
-        SimpleDateFormat fi = new SimpleDateFormat("dd/MM/yyyy");
-        da1 = fi.parse("17/10/2000");
-        da2 = fi.parse("14/07/2000");
-        da3 = fi.parse("18/06/1996");
-        clientes.add(new UCliente(11911224, da1, new Date(), "Alessandro", "Giovanni", "Reyes", "1234", "Trimarchi"));
-        clientes.add(new UCliente(11841181, da1, new Date(), "Adriana", null, "Parodi", "1234", "Turcios"));
-        mantenimientos.add(new UMantenimiento(666666, da3, new Date(), "Alvaro", "Alexandre", "Reyes", "123", "Trimarchi"));
+//        atms.add(new ATM("Tegucigalpa, Diprova", "2 años", 11911220, 1500, new Date()));
+//        atms.add(new ATM("Tegucigalpa, Altia", "2 años", 11911229, 1500,new Date()));
+//        atms.add(new ATM("San Pedro Sula, Altia", "2 años", 11911111, 1500,new Date()));
+//        atms.add(new ATM("Tegucigalpa, City Mall", "2 años", 11911225, 1500,new Date()));
+//        atms.add(new ATM("San Pedro Sula, City Mall", "2 años", 11911222, 1500,new Date()));
+//        
+//        Date da1, da2, da3;
+//        SimpleDateFormat fi = new SimpleDateFormat("dd/MM/yyyy");
+//        da1 = fi.parse("17/10/2000");
+//        da2 = fi.parse("14/07/2000");
+//        da3 = fi.parse("18/06/1996");
+//        clientes.add(new UCliente(11911224, da1, new Date(), "Alessandro", "Giovanni", "Reyes", "1234", "Trimarchi"));
+//        clientes.add(new UCliente(11841181, da1, new Date(), "Adriana", null, "Parodi", "1234", "Turcios"));
+//        mantenimientos.add(new UMantenimiento(666666, da3, new Date(), "Alvaro", "Alexandre", "Reyes", "123", "Trimarchi"));
         //-------------------------------------------------------------------------------------------------------------------
         DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
         cb_ATMsLog.setModel(modelo);
@@ -53,9 +54,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setVisible(false);
         jLabel2.setVisible(false);
         btn_login.setVisible(false);
-        btn_CrearATM.setVisible(false);
-        btn_CrearC.setVisible(false);
-        btn_CrearM.setVisible(false);
     }
 
     /**
@@ -117,6 +115,9 @@ public class Principal extends javax.swing.JFrame {
         btn_Accion_r = new javax.swing.JButton();
         btn_factura = new javax.swing.JButton();
         jd_estado = new javax.swing.JDialog();
+        jLabel17 = new javax.swing.JLabel();
+        cb_estado = new javax.swing.JComboBox<>();
+        btn_estado_r = new javax.swing.JButton();
         jd_transacciones = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         jl_transacciones = new javax.swing.JList<>();
@@ -435,6 +436,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_Accion_r.setText("Regresar");
+        btn_Accion_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_Accion_rMouseClicked(evt);
+            }
+        });
 
         btn_factura.setText("Ver factura de la accion realizada");
         btn_factura.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -457,7 +463,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jd_ingresarDLayout.createSequentialGroup()
                         .addGroup(jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(cb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -474,15 +480,40 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btn_factura)))
         );
 
+        jLabel17.setText("Elija la cuenta que quiere ver el estado de cuenta");
+
+        cb_estado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_estadoItemStateChanged(evt);
+            }
+        });
+
+        btn_estado_r.setText("Regresar");
+        btn_estado_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_estado_rMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_estadoLayout = new javax.swing.GroupLayout(jd_estado.getContentPane());
         jd_estado.getContentPane().setLayout(jd_estadoLayout);
         jd_estadoLayout.setHorizontalGroup(
             jd_estadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jd_estadoLayout.createSequentialGroup()
+                .addGroup(jd_estadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17)
+                    .addComponent(btn_estado_r)
+                    .addComponent(cb_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 242, Short.MAX_VALUE))
         );
         jd_estadoLayout.setVerticalGroup(
             jd_estadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jd_estadoLayout.createSequentialGroup()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
+                .addComponent(btn_estado_r))
         );
 
         jl_transacciones.setModel(new DefaultListModel());
@@ -660,13 +691,14 @@ public class Principal extends javax.swing.JFrame {
                         String st = (df.format(new Date()));
                         int h = new Date().getHours();
                         try {
-                            File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                            File archivo = new File("./LogSitema.txt");
                             FileWriter fw = null;
                             BufferedWriter bw = null;
                             try {
-                                fw = new FileWriter(archivo, false);
+                                fw = new FileWriter(archivo, true);
                                 bw = new BufferedWriter(fw);
                                 bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.newLine();
                                 bw.flush();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -709,13 +741,14 @@ public class Principal extends javax.swing.JFrame {
                         String st = (df.format(new Date()));
                         int h = new Date().getHours();
                         try {
-                            File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                            File archivo = new File("./LogSitema.txt");
                             FileWriter fw = null;
                             BufferedWriter bw = null;
                             try {
-                                fw = new FileWriter(archivo, false);
+                                fw = new FileWriter(archivo, true);
                                 bw = new BufferedWriter(fw);
                                 bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.newLine();
                                 bw.flush();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -747,13 +780,14 @@ public class Principal extends javax.swing.JFrame {
                         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                         String st = (df.format(new Date()));
                         try {
-                            File archivo = new File("./LogSitema_" + st + ".txt");
+                            File archivo = new File("./LogSitema.txt");
                             FileWriter fw = null;
                             BufferedWriter bw = null;
                             try {
-                                fw = new FileWriter(archivo, false);
+                                fw = new FileWriter(archivo, true);
                                 bw = new BufferedWriter(fw);
                                 bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.newLine();
                                 bw.flush();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
@@ -977,13 +1011,14 @@ public class Principal extends javax.swing.JFrame {
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    File archivo = new File("./LogSitema.txt");
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo, true);
                         bw = new BufferedWriter(fw);
                         bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.newLine();
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -992,6 +1027,9 @@ public class Principal extends javax.swing.JFrame {
                     fw.close();
                 } catch (Exception e) {
                 }
+                ATMAdmi a = new ATMAdmi("./ATM.alo");
+                a.cargarArchivo();
+                atms = a.getListaATM();
                 break;
             } else if (i == MIN.getATMs().size() - 1 && !MIN.getATMs().get(i).equals(use)) {
                 JOptionPane.showMessageDialog(jd_mantenimientos, "Error, usted no tiene asignado este ATM.");
@@ -1005,13 +1043,14 @@ public class Principal extends javax.swing.JFrame {
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    File archivo = new File("./LogSitema.txt");
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo, true);
                         bw = new BufferedWriter(fw);
                         bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.newLine();
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1025,17 +1064,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_dineroatmActionPerformed
 
     private void jmi_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_ingresarActionPerformed
+        RoI = 1;
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(CIN.getCuentas().toArray());
+        cb_cliente.setModel(modelo);
+        
         jd_clientes.setModal(false);
         jd_clientes.setVisible(false);
         jd_ingresarD.setModal(true);
         jd_ingresarD.pack();
         jd_ingresarD.setLocationRelativeTo(this);
         jd_ingresarD.setVisible(true);
-
-        RoI = 1;
+        
+        
+        
     }//GEN-LAST:event_jmi_ingresarActionPerformed
 
     private void jmi_retirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_retirarActionPerformed
+        RoI = 2;
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(CIN.getCuentas().toArray());
+        cb_cliente.setModel(modelo);
+        
         jd_clientes.setModal(false);
         jd_clientes.setVisible(false);
         jd_ingresarD.setModal(true);
@@ -1043,7 +1091,7 @@ public class Principal extends javax.swing.JFrame {
         jd_ingresarD.setLocationRelativeTo(this);
         jd_ingresarD.setVisible(true);
 
-        RoI = 2;
+        
     }//GEN-LAST:event_jmi_retirarActionPerformed
 
     private void jmi_creacCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_creacCuentaActionPerformed
@@ -1068,12 +1116,18 @@ public class Principal extends javax.swing.JFrame {
         }
         CIN.getCuentas().add(new Cuenta(n, 0, CIN.getId_Usuario()));
         clientes.get(y).getCuentas().add(new Cuenta(n, 0, CIN.getId_Usuario()));
+        UClienteAdmi c = new UClienteAdmi("./Cliente.alo");
+        c.setListaCliente(clientes);
+        c.escribirArchivo();
         JOptionPane.showMessageDialog(jd_clientes, "Cuenta hecha con exito, el numero de cuenta es: "
                 + CIN.getCuentas().get(CIN.getCuentas().size() - 1).getNumCuenta());
 
     }//GEN-LAST:event_jmi_creacCuentaActionPerformed
 
     private void jmi_verEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_verEstadoActionPerformed
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(CIN.getCuentas().toArray());
+        cb_estado.setModel(modelo);
+        
         jd_clientes.setModal(false);
         jd_clientes.setVisible(false);
         jd_estado.setModal(true);
@@ -1127,11 +1181,12 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < CIN.getCuentas().size(); i++) {
             if (((Cuenta) cb_cliente.getSelectedItem()).getNumCuenta() == CIN.getCuentas().get(i).getNumCuenta()) {
                 y = i;
+                break;
             }
         }
 
         if (RoI == 1) {
-            int di = Integer.parseInt(JOptionPane.showInputDialog(this, "Cuanto dinero desea Ingresar a cuenta"
+            int di = Integer.parseInt(JOptionPane.showInputDialog(jd_ingresarD, "Cuanto dinero desea Ingresar a cuenta"
                     + "\nOpcion #1 100 \nOpcion #2 500 (Ingrese 1 o 2: "));
 
             if (di == 1) {
@@ -1153,9 +1208,9 @@ public class Principal extends javax.swing.JFrame {
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo);
                         bw = new BufferedWriter(fw);
-                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.write(CIN.getTransacciones().get(CIN.getTransacciones().size()-1).toString());
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1174,13 +1229,14 @@ public class Principal extends javax.swing.JFrame {
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    File archivo = new File("./LogSitema.txt");
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo, true);
                         bw = new BufferedWriter(fw);
                         bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.newLine();
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1189,6 +1245,7 @@ public class Principal extends javax.swing.JFrame {
                     fw.close();
                 } catch (Exception e) {
                 }
+                
             } else if (di == 2) {
                 CIN.getCuentas().get(y).setSaldo_disponible(CIN.getCuentas().get(y).getSaldo_disponible() + 500);
                 clientes.get(z).getCuentas().get(y).setSaldo_disponible(clientes.get(z).getCuentas().get(y).
@@ -1208,9 +1265,9 @@ public class Principal extends javax.swing.JFrame {
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo);
                         bw = new BufferedWriter(fw);
-                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.write(CIN.getTransacciones().get(CIN.getTransacciones().size()-1).toString());
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1228,25 +1285,30 @@ public class Principal extends javax.swing.JFrame {
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
+                
+                File archivo = null;
+                FileWriter fw = null;
+                BufferedWriter bw = null;
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
-                    FileWriter fw = null;
-                    BufferedWriter bw = null;
-                    try {
-                        fw = new FileWriter(archivo, false);
-                        bw = new BufferedWriter(fw);
-                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
-                        bw.flush();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    archivo = new File("./LogSitema.txt");
+                    fw = new FileWriter(archivo, true );
+                    bw = new BufferedWriter(fw);
+
+                    bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                    bw.newLine();
+                    bw.flush();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                try {
                     bw.close();
                     fw.close();
-                } catch (Exception e) {
+                } catch (IOException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else if (RoI == 2) {
-            int di = Integer.parseInt(JOptionPane.showInputDialog(this, "Cuanto dinero desea retirar de esta cuenta"
+            int di = Integer.parseInt(JOptionPane.showInputDialog(jd_ingresarD, "Cuanto dinero desea retirar de esta cuenta"
                     + "\nOpcion #1 100 \nOpcion #2 500 (Ingrese 1 o 2: "));
 
             if (di == 1 && use.getDinero_cont() >= 100 && CIN.getCuentas().get(y).getSaldo_disponible() >= 100) {
@@ -1268,9 +1330,9 @@ public class Principal extends javax.swing.JFrame {
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo);
                         bw = new BufferedWriter(fw);
-                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.write(CIN.getTransacciones().get(CIN.getTransacciones().size()-1).toString());
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1289,13 +1351,14 @@ public class Principal extends javax.swing.JFrame {
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    File archivo = new File("./LogSitema.txt");
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo, true);
                         bw = new BufferedWriter(fw);
                         bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.newLine();
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1323,9 +1386,9 @@ public class Principal extends javax.swing.JFrame {
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo);
                         bw = new BufferedWriter(fw);
-                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.write(CIN.getTransacciones().get(CIN.getTransacciones().size()-1).toString());
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1344,13 +1407,14 @@ public class Principal extends javax.swing.JFrame {
                 String st = (df.format(new Date()));
                 int h = new Date().getHours();
                 try {
-                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    File archivo = new File("./LogSitema.txt");
                     FileWriter fw = null;
                     BufferedWriter bw = null;
                     try {
-                        fw = new FileWriter(archivo, false);
+                        fw = new FileWriter(archivo, true);
                         bw = new BufferedWriter(fw);
                         bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.newLine();
                         bw.flush();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -1363,6 +1427,12 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jd_ingresarD, "El ATM o su cuenta no tiene suficiente dinero para retirar.");
             }
         }
+        UClienteAdmi c = new UClienteAdmi("./Cliente.alo");
+        c.setListaCliente(clientes);
+        c.escribirArchivo();
+        ATMAdmi  a = new ATMAdmi("./ATM.alo");
+        a.cargarArchivo();
+        atms = a.getListaATM();
     }//GEN-LAST:event_cb_clienteItemStateChanged
 
     private void btn_facturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_facturaMouseClicked
@@ -1384,8 +1454,49 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_ATMsLogItemStateChanged
 
     private void cb_atmsCMItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_atmsCMItemStateChanged
-        Tatms.add((ATM) cb_atmsCM.getSelectedItem());
+        if(Tatms.isEmpty()){
+            Tatms.add((ATM) cb_atmsCM.getSelectedItem());
+        }else{
+            for (int i = 0; i < Tatms.size(); i++) {
+            if(Tatms.get(i).getID_único() == ((ATM) cb_atmsCM.getSelectedItem()).getID_único()){
+                break;
+            }else if(Tatms.get(i).getID_único() != ((ATM) cb_atmsCM.getSelectedItem()).getID_único() && i == Tatms.size()-1){
+                Tatms.add((ATM) cb_atmsCM.getSelectedItem());
+            }
+        }
+        }
+        
+        
     }//GEN-LAST:event_cb_atmsCMItemStateChanged
+
+    private void btn_Accion_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Accion_rMouseClicked
+        jd_ingresarD.setModal(false);
+        jd_ingresarD.setVisible(false);
+        jd_clientes.setModal(true);
+        jd_clientes.pack();
+        jd_clientes.setLocationRelativeTo(this);
+        jd_clientes.setVisible(true);
+    }//GEN-LAST:event_btn_Accion_rMouseClicked
+
+    private void cb_estadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_estadoItemStateChanged
+        int y=0;
+        for (int i = 0; i < CIN.getCuentas().size(); i++) {
+            if (((Cuenta) cb_cliente.getSelectedItem()).getNumCuenta() == CIN.getCuentas().get(i).getNumCuenta()) {
+                y = i;
+                break;
+            }
+        }
+        JOptionPane.showMessageDialog(jd_estado, "Saldo Disponible: "+ CIN.getCuentas().get(y).getSaldo_disponible());
+    }//GEN-LAST:event_cb_estadoItemStateChanged
+
+    private void btn_estado_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_estado_rMouseClicked
+        jd_estado.setModal(false);
+        jd_estado.setVisible(false);
+        jd_clientes.setModal(true);
+        jd_clientes.pack();
+        jd_clientes.setLocationRelativeTo(this);
+        jd_clientes.setVisible(true);
+    }//GEN-LAST:event_btn_estado_rMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1436,11 +1547,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_CrearC;
     private javax.swing.JButton btn_CrearM;
     private javax.swing.JButton btn_Transacciones_r;
+    private javax.swing.JButton btn_estado_r;
     private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_login;
     private javax.swing.JComboBox<String> cb_ATMsLog;
     private javax.swing.JComboBox<String> cb_atmsCM;
     private javax.swing.JComboBox<String> cb_cliente;
+    private javax.swing.JComboBox<String> cb_estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1449,6 +1562,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

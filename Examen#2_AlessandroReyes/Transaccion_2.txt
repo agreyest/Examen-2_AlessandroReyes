@@ -1,0 +1,8 @@
+                                   Transaccion 
+
+
+Num_Cuenta= 650880
+Descripcion:    Se agregaron 100 del atm y de la cuenta.
+Fecha= 20/03/2020
+Hora= 22
+ID_unico= 1}
