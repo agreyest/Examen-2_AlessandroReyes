@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import java.util.Random;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -26,11 +27,11 @@ public class Principal extends javax.swing.JFrame {
         a.cargarArchivo();
         atms = a.getListaATM();
         //-------------------------------------------------------------------------------------------------------------------
-        atms.add(new ATM("Tegucigalpa, Diprova", "2 años", 11911220, new Date()));
-        atms.add(new ATM("Tegucigalpa, Altia", "2 años", 11911229, new Date()));
-        atms.add(new ATM("San Pedro Sula, Altia", "2 años", 11911111, new Date()));
-        atms.add(new ATM("Tegucigalpa, City Mall", "2 años", 11911225, new Date()));
-        atms.add(new ATM("San Pedro Sula, City Mall", "2 años", 11911222, new Date()));
+        atms.add(new ATM("Tegucigalpa, Diprova", "2 años", 11911220, 1500, new Date()));
+        atms.add(new ATM("Tegucigalpa, Altia", "2 años", 11911229, 1500,new Date()));
+        atms.add(new ATM("San Pedro Sula, Altia", "2 años", 11911111, 1500,new Date()));
+        atms.add(new ATM("Tegucigalpa, City Mall", "2 años", 11911225, 1500,new Date()));
+        atms.add(new ATM("San Pedro Sula, City Mall", "2 años", 11911222, 1500,new Date()));
         
         Date da1, da2;
         SimpleDateFormat fi = new SimpleDateFormat("dd/MM/yyyy");
@@ -62,15 +63,28 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jmi_LOcliente = new javax.swing.JMenuItem();
         jd_mantenimientos = new javax.swing.JDialog();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jmi_dineroatm = new javax.swing.JMenuItem();
+        jmi_LOmantenimiento = new javax.swing.JMenuItem();
         jd_CrearM = new javax.swing.JDialog();
         jd_CrearC = new javax.swing.JDialog();
         jd_CrearATM = new javax.swing.JDialog();
+        jLabel4 = new javax.swing.JLabel();
+        tf_CATM_ubicacion = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        tf_CATM_mante = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        tf_CATM_dinero = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        btn_CATM_r = new javax.swing.JButton();
+        btn_CATM = new javax.swing.JButton();
+        jdc_ATMfab = new com.toedter.calendar.JDateChooser();
         tf_idlog = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -84,13 +98,27 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("Acciones");
 
-        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.setText("Ingresar dinero");
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Retirar dinero");
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setText("Crear nueva Cuenta");
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Estado de la cuenta");
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setText("Transacciones");
+        jMenu1.add(jMenuItem5);
+
         jmi_LOcliente.setText("Log out");
+        jmi_LOcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_LOclienteActionPerformed(evt);
+            }
+        });
         jMenu1.add(jmi_LOcliente);
 
         jMenuBar1.add(jMenu1);
@@ -110,11 +138,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Accion");
 
-        jMenuItem3.setText("jMenuItem3");
-        jMenu2.add(jMenuItem3);
+        jmi_dineroatm.setText("Ingresar dinero al atm");
+        jMenu2.add(jmi_dineroatm);
 
-        jMenuItem4.setText("jMenuItem4");
-        jMenu2.add(jMenuItem4);
+        jmi_LOmantenimiento.setText("Log out");
+        jmi_LOmantenimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_LOmantenimientoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmi_LOmantenimiento);
 
         jMenuBar2.add(jMenu2);
 
@@ -153,15 +186,82 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        jLabel4.setText("Ubicación");
+
+        jLabel5.setText("Cada cuanto se le da mantemininto (EJ: 5 anios):");
+
+        jLabel6.setText("Cuanto dinero contiene el ATM");
+
+        jLabel7.setText("Año en el que se fabrico");
+
+        btn_CATM_r.setText("Regresar");
+
+        btn_CATM.setText("crear ATM");
+        btn_CATM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CATMMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_CrearATMLayout = new javax.swing.GroupLayout(jd_CrearATM.getContentPane());
         jd_CrearATM.getContentPane().setLayout(jd_CrearATMLayout);
         jd_CrearATMLayout.setHorizontalGroup(
             jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(203, 203, 203))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CrearATMLayout.createSequentialGroup()
+                        .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(tf_CATM_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(tf_CATM_mante, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_CrearATMLayout.createSequentialGroup()
+                                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btn_CATM_r)
+                                    .addComponent(tf_CATM_dinero, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btn_CATM)
+                                        .addGap(199, 199, 199))
+                                    .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                                        .addGap(130, 130, 130)
+                                        .addComponent(jdc_ATMfab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(39, 39, 39))))
         );
         jd_CrearATMLayout.setVerticalGroup(
             jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jd_CrearATMLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tf_CATM_ubicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(tf_CATM_mante))
+                .addGap(96, 96, 96)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tf_CATM_dinero, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(jdc_ATMfab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addGroup(jd_CrearATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_CATM_r)
+                    .addComponent(btn_CATM)))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -191,6 +291,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_CrearATM.setText("Crear ATM");
+        btn_CrearATM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CrearATMMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,6 +421,60 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_loginMouseClicked
 
+    private void jmi_LOmantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_LOmantenimientoActionPerformed
+        jd_mantenimientos.setModal(false);
+        jd_mantenimientos.setVisible(false);
+        this.pack();
+        this.setLocationRelativeTo(this);
+        this.setVisible(true);
+        
+        MIN = null;
+    }//GEN-LAST:event_jmi_LOmantenimientoActionPerformed
+
+    private void jmi_LOclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_LOclienteActionPerformed
+        jd_clientes.setModal(false);
+        jd_clientes.setVisible(false);
+        this.pack();
+        this.setLocationRelativeTo(this);
+        this.setVisible(true);
+        
+        CIN = null;
+    }//GEN-LAST:event_jmi_LOclienteActionPerformed
+
+    private void btn_CrearATMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CrearATMMouseClicked
+        this.setVisible(false);
+        jd_CrearATM.setModal(true);
+        jd_CrearATM.pack();
+        jd_CrearATM.setLocationRelativeTo(this);
+        jd_CrearATM.setVisible(true);
+    }//GEN-LAST:event_btn_CrearATMMouseClicked
+
+    private void btn_CATMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CATMMouseClicked
+        int n = 1000000+random.nextInt(9000000);
+        boolean v = false;
+        while(!v){
+            for (int i = 0; i < atms.size(); i++) {
+                if(atms.get(i).getID_único() == n){
+                    n = 1000000+random.nextInt(9000000);
+                    break;
+                }else if(atms.get(i).getID_único() != n && i == atms.size()-1){
+                    v = true;
+                    break;
+                }
+            }
+        }
+        
+        atms.add(new ATM(tf_CATM_ubicacion.getText(), tf_CATM_mante.getText(), n, Integer.parseInt(tf_CATM_dinero.getText()),
+                jdc_ATMfab.getDate()));
+        ATMAdmi a = new ATMAdmi("./ATM.alo");
+        a.setListaATM(atms);
+        a.escribirArchivo();
+        tf_CATM_dinero.setText("");
+        tf_CATM_mante.setText("");
+        tf_CATM_ubicacion.setText("");
+        jdc_ATMfab.setDate(new Date());
+    }//GEN-LAST:event_btn_CATMMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -356,6 +515,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_CATM;
+    private javax.swing.JButton btn_CATM_r;
     private javax.swing.JButton btn_CrearATM;
     private javax.swing.JButton btn_CrearC;
     private javax.swing.JButton btn_CrearM;
@@ -364,6 +525,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -372,13 +537,20 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JDialog jd_CrearATM;
     private javax.swing.JDialog jd_CrearC;
     private javax.swing.JDialog jd_CrearM;
     private javax.swing.JDialog jd_clientes;
     private javax.swing.JDialog jd_mantenimientos;
+    private com.toedter.calendar.JDateChooser jdc_ATMfab;
     private javax.swing.JMenuItem jmi_LOcliente;
+    private javax.swing.JMenuItem jmi_LOmantenimiento;
+    private javax.swing.JMenuItem jmi_dineroatm;
     private javax.swing.JPasswordField pf_pwlog;
+    private javax.swing.JTextField tf_CATM_dinero;
+    private javax.swing.JTextField tf_CATM_mante;
+    private javax.swing.JTextField tf_CATM_ubicacion;
     private javax.swing.JTextField tf_idlog;
     // End of variables declaration//GEN-END:variables
     ArrayList<ATM> atms = new ArrayList();
@@ -388,4 +560,5 @@ public class Principal extends javax.swing.JFrame {
     UCliente CIN;
     UMantenimiento MIN;
     boolean u = false;
+    Random random = new Random();
 }
