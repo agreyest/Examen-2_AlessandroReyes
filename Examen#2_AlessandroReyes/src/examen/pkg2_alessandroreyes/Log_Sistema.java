@@ -26,6 +26,12 @@ public class Log_Sistema implements Serializable{
         this.u = u;
     }
 
+    public Log_Sistema(String desc_acción, Date Fecha) {
+        this.desc_acción = desc_acción;
+        this.Fecha = Fecha;
+    }
+    
+
     public UCliente getCliente() {
         return cliente;
     }
@@ -63,13 +69,16 @@ public class Log_Sistema implements Serializable{
     public String toString() {
         if(u){
             return "                                            Log_Sistema\n\n\n" + 
-                "Usuario: "+cliente.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
+                "Usuario cliente: "+cliente.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
                 "\nHora= " + Fecha.getHours() + '}';
-        }else{
+        }else if (!u){
             return "                                            Log_Sistema\n\n\n" + 
-                "Usuario: "+ mantenimiento.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
+                "Usuario mantenimiento: "+ mantenimiento.getId_Usuario() +"\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
                 "\nHora= " + Fecha.getHours() + '}';
-        } 
+        }
+        return "                                            Log_Sistema\n\n\n" + 
+                "\nDescripcion: " + desc_acción + "\nFecha: " + df.format(Fecha) + 
+                "\nHora= " + Fecha.getHours() + '}';
     }
     
 }

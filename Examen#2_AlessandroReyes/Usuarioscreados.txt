@@ -1,0 +1,3 @@
+id: 11911224, contra = 1234 (cliente)
+id: 11841181, contra = 1234 (cliente)
+id: 666666, contra = 123 (Mantenimiento) 

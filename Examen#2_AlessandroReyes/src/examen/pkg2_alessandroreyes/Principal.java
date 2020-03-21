@@ -1,5 +1,8 @@
 package examen.pkg2_alessandroreyes;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import java.util.Random;
+import javax.swing.DefaultListModel;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -33,12 +37,14 @@ public class Principal extends javax.swing.JFrame {
         atms.add(new ATM("Tegucigalpa, City Mall", "2 años", 11911225, 1500,new Date()));
         atms.add(new ATM("San Pedro Sula, City Mall", "2 años", 11911222, 1500,new Date()));
         
-        Date da1, da2;
+        Date da1, da2, da3;
         SimpleDateFormat fi = new SimpleDateFormat("dd/MM/yyyy");
         da1 = fi.parse("17/10/2000");
         da2 = fi.parse("14/07/2000");
+        da3 = fi.parse("18/06/1996");
         clientes.add(new UCliente(11911224, da1, new Date(), "Alessandro", "Giovanni", "Reyes", "1234", "Trimarchi"));
         clientes.add(new UCliente(11841181, da1, new Date(), "Adriana", null, "Parodi", "1234", "Turcios"));
+        mantenimientos.add(new UMantenimiento(666666, da3, new Date(), "Alvaro", "Alexandre", "Reyes", "123", "Trimarchi"));
         //-------------------------------------------------------------------------------------------------------------------
         DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
         cb_ATMsLog.setModel(modelo);
@@ -47,6 +53,9 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setVisible(false);
         jLabel2.setVisible(false);
         btn_login.setVisible(false);
+        btn_CrearATM.setVisible(false);
+        btn_CrearC.setVisible(false);
+        btn_CrearM.setVisible(false);
     }
 
     /**
@@ -61,19 +70,36 @@ public class Principal extends javax.swing.JFrame {
         jd_clientes = new javax.swing.JDialog();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jmi_ingresar = new javax.swing.JMenuItem();
+        jmi_retirar = new javax.swing.JMenuItem();
+        jmi_creacCuenta = new javax.swing.JMenuItem();
+        jmi_verEstado = new javax.swing.JMenuItem();
+        jmi_verTrans = new javax.swing.JMenuItem();
         jmi_LOcliente = new javax.swing.JMenuItem();
         jd_mantenimientos = new javax.swing.JDialog();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jmi_dineroatm = new javax.swing.JMenuItem();
         jmi_LOmantenimiento = new javax.swing.JMenuItem();
-        jd_CrearM = new javax.swing.JDialog();
-        jd_CrearC = new javax.swing.JDialog();
+        jd_CrearCoM = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        jdc_naci = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jdc_afilacion = new com.toedter.calendar.JDateChooser();
+        jLabel10 = new javax.swing.JLabel();
+        tf_1nom = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        tf_2nom = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        tf_1apellido = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        tf_2apellido = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        tf_contra = new javax.swing.JTextField();
+        btn_CoMCrear_r = new javax.swing.JButton();
+        btn_CoMCrear = new javax.swing.JButton();
+        lb_atm = new javax.swing.JLabel();
+        cb_atmsCM = new javax.swing.JComboBox<>();
         jd_CrearATM = new javax.swing.JDialog();
         jLabel4 = new javax.swing.JLabel();
         tf_CATM_ubicacion = new javax.swing.JTextField();
@@ -85,6 +111,17 @@ public class Principal extends javax.swing.JFrame {
         btn_CATM_r = new javax.swing.JButton();
         btn_CATM = new javax.swing.JButton();
         jdc_ATMfab = new com.toedter.calendar.JDateChooser();
+        jd_ingresarD = new javax.swing.JDialog();
+        jLabel15 = new javax.swing.JLabel();
+        cb_cliente = new javax.swing.JComboBox<>();
+        btn_Accion_r = new javax.swing.JButton();
+        btn_factura = new javax.swing.JButton();
+        jd_estado = new javax.swing.JDialog();
+        jd_transacciones = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jl_transacciones = new javax.swing.JList<>();
+        jLabel16 = new javax.swing.JLabel();
+        btn_Transacciones_r = new javax.swing.JButton();
         tf_idlog = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -98,20 +135,45 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("Acciones");
 
-        jMenuItem1.setText("Ingresar dinero");
-        jMenu1.add(jMenuItem1);
+        jmi_ingresar.setText("Ingresar dinero");
+        jmi_ingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_ingresarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmi_ingresar);
 
-        jMenuItem2.setText("Retirar dinero");
-        jMenu1.add(jMenuItem2);
+        jmi_retirar.setText("Retirar dinero");
+        jmi_retirar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_retirarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmi_retirar);
 
-        jMenuItem3.setText("Crear nueva Cuenta");
-        jMenu1.add(jMenuItem3);
+        jmi_creacCuenta.setText("Crear nueva Cuenta");
+        jmi_creacCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_creacCuentaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmi_creacCuenta);
 
-        jMenuItem4.setText("Estado de la cuenta");
-        jMenu1.add(jMenuItem4);
+        jmi_verEstado.setText("Estado de una Cuenta");
+        jmi_verEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_verEstadoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmi_verEstado);
 
-        jMenuItem5.setText("Transacciones");
-        jMenu1.add(jMenuItem5);
+        jmi_verTrans.setText("Transacciones");
+        jmi_verTrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_verTransActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmi_verTrans);
 
         jmi_LOcliente.setText("Log out");
         jmi_LOcliente.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +201,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Accion");
 
         jmi_dineroatm.setText("Ingresar dinero al atm");
+        jmi_dineroatm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_dineroatmActionPerformed(evt);
+            }
+        });
         jMenu2.add(jmi_dineroatm);
 
         jmi_LOmantenimiento.setText("Log out");
@@ -164,26 +231,115 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 514, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jd_CrearMLayout = new javax.swing.GroupLayout(jd_CrearM.getContentPane());
-        jd_CrearM.getContentPane().setLayout(jd_CrearMLayout);
-        jd_CrearMLayout.setHorizontalGroup(
-            jd_CrearMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jd_CrearMLayout.setVerticalGroup(
-            jd_CrearMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel8.setText("Fecha de nacimiento");
 
-        javax.swing.GroupLayout jd_CrearCLayout = new javax.swing.GroupLayout(jd_CrearC.getContentPane());
-        jd_CrearC.getContentPane().setLayout(jd_CrearCLayout);
-        jd_CrearCLayout.setHorizontalGroup(
-            jd_CrearCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jLabel9.setText("Año de afilacion");
+
+        jLabel10.setText("Primer Nombre");
+
+        jLabel11.setText("Segundo Nombre");
+
+        jLabel12.setText("Primer apellido");
+
+        jLabel13.setText("Segundo apellido");
+
+        jLabel14.setText("Contraseña que utilizara para ingresar");
+
+        btn_CoMCrear_r.setText("Regresar");
+        btn_CoMCrear_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CoMCrear_rMouseClicked(evt);
+            }
+        });
+
+        btn_CoMCrear.setText("Crear cuenta");
+        btn_CoMCrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CoMCrearMouseClicked(evt);
+            }
+        });
+
+        lb_atm.setText("Elija los atms que le perteneceran");
+
+        cb_atmsCM.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_atmsCMItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_CrearCoMLayout = new javax.swing.GroupLayout(jd_CrearCoM.getContentPane());
+        jd_CrearCoM.getContentPane().setLayout(jd_CrearCoMLayout);
+        jd_CrearCoMLayout.setHorizontalGroup(
+            jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CrearCoMLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jdc_afilacion, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                        .addComponent(jdc_naci, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(tf_1apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(tf_contra, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_atm)
+                    .addComponent(jLabel13)
+                    .addComponent(tf_1nom)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(tf_2nom)
+                    .addComponent(tf_2apellido)
+                    .addComponent(cb_atmsCM, 0, 230, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jd_CrearCoMLayout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(btn_CoMCrear_r)
+                .addGap(119, 119, 119)
+                .addComponent(btn_CoMCrear)
+                .addContainerGap(241, Short.MAX_VALUE))
         );
-        jd_CrearCLayout.setVerticalGroup(
-            jd_CrearCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jd_CrearCoMLayout.setVerticalGroup(
+            jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_CrearCoMLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tf_1nom, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(jdc_naci, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jdc_afilacion, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(tf_2nom))
+                .addGap(58, 58, 58)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tf_1apellido, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(tf_2apellido))
+                .addGap(50, 50, 50)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(lb_atm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cb_atmsCM, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(tf_contra))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addGroup(jd_CrearCoMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_CoMCrear_r)
+                    .addComponent(btn_CoMCrear)))
         );
 
         jLabel4.setText("Ubicación");
@@ -195,6 +351,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setText("Año en el que se fabrico");
 
         btn_CATM_r.setText("Regresar");
+        btn_CATM_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CATM_rMouseClicked(evt);
+            }
+        });
 
         btn_CATM.setText("crear ATM");
         btn_CATM.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -264,6 +425,103 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btn_CATM)))
         );
 
+        jLabel15.setText("Elija la cuenta");
+
+        cb_cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cb_cliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_clienteItemStateChanged(evt);
+            }
+        });
+
+        btn_Accion_r.setText("Regresar");
+
+        btn_factura.setText("Ver factura de la accion realizada");
+        btn_factura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_facturaMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_ingresarDLayout = new javax.swing.GroupLayout(jd_ingresarD.getContentPane());
+        jd_ingresarD.getContentPane().setLayout(jd_ingresarDLayout);
+        jd_ingresarDLayout.setHorizontalGroup(
+            jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_ingresarDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_ingresarDLayout.createSequentialGroup()
+                        .addComponent(btn_Accion_r, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
+                        .addComponent(btn_factura))
+                    .addGroup(jd_ingresarDLayout.createSequentialGroup()
+                        .addGroup(jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(cb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jd_ingresarDLayout.setVerticalGroup(
+            jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_ingresarDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
+                .addGroup(jd_ingresarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Accion_r)
+                    .addComponent(btn_factura)))
+        );
+
+        javax.swing.GroupLayout jd_estadoLayout = new javax.swing.GroupLayout(jd_estado.getContentPane());
+        jd_estado.getContentPane().setLayout(jd_estadoLayout);
+        jd_estadoLayout.setHorizontalGroup(
+            jd_estadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jd_estadoLayout.setVerticalGroup(
+            jd_estadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jl_transacciones.setModel(new DefaultListModel());
+        jScrollPane1.setViewportView(jl_transacciones);
+
+        jLabel16.setText("Transacciones hechas");
+
+        btn_Transacciones_r.setText("Regresar");
+        btn_Transacciones_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_Transacciones_rMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_transaccionesLayout = new javax.swing.GroupLayout(jd_transacciones.getContentPane());
+        jd_transacciones.getContentPane().setLayout(jd_transaccionesLayout);
+        jd_transaccionesLayout.setHorizontalGroup(
+            jd_transaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_transaccionesLayout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addGroup(jd_transaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(107, Short.MAX_VALUE))
+            .addGroup(jd_transaccionesLayout.createSequentialGroup()
+                .addComponent(btn_Transacciones_r)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jd_transaccionesLayout.setVerticalGroup(
+            jd_transaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_transaccionesLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(btn_Transacciones_r))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("ID_Cuenta");
@@ -278,15 +536,25 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_CrearC.setText("Crear cuenta cliente ");
+        btn_CrearC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CrearCMouseClicked(evt);
+            }
+        });
 
         btn_CrearM.setText("Crear cuenta mantenimiento");
+        btn_CrearM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CrearMMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Elija el ATM en el que se encuentra");
 
         cb_ATMsLog.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cb_ATMsLog.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_ATMsLogActionPerformed(evt);
+        cb_ATMsLog.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_ATMsLogItemStateChanged(evt);
             }
         });
 
@@ -355,16 +623,6 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cb_ATMsLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ATMsLogActionPerformed
-        use = (ATM) cb_ATMsLog.getSelectedItem();
-        tf_idlog.setVisible(true);
-        pf_pwlog.setVisible(true);
-        jLabel1.setVisible(true);
-        jLabel2.setVisible(true);
-        btn_login.setVisible(true);
-        System.out.println(use);
-    }//GEN-LAST:event_cb_ATMsLogActionPerformed
-
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
         boolean v = false;
         try {
@@ -386,6 +644,37 @@ public class Principal extends javax.swing.JFrame {
                         jd_clientes.setLocationRelativeTo(this);
                         jd_clientes.setVisible(true);
                         
+                        int x = 0;
+                        for (int j = 0; j < atms.size(); j++) {
+                            if (use.getID_único() == atms.get(j).getID_único()) {
+                                x = j;
+                                break;
+                            }
+                        }
+                        use.getLogs().add(new Log_Sistema(CIN, "El cliente hizo log in",
+                                new Date(), u));
+                        atms.get(x).getLogs().add(new Log_Sistema(CIN, "El cliente hizo log in",
+                                new Date(), u));
+
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        String st = (df.format(new Date()));
+                        int h = new Date().getHours();
+                        try {
+                            File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                            FileWriter fw = null;
+                            BufferedWriter bw = null;
+                            try {
+                                fw = new FileWriter(archivo, false);
+                                bw = new BufferedWriter(fw);
+                                bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.flush();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                        }
                         break;
                     }
                 }
@@ -403,12 +692,78 @@ public class Principal extends javax.swing.JFrame {
                         jd_mantenimientos.pack();
                         jd_mantenimientos.setLocationRelativeTo(this);
                         jd_mantenimientos.setVisible(true);
+                        
+                        int x = 0;
+                        for (int j = 0; j < atms.size(); j++) {
+                            if (use.getID_único() == atms.get(j).getID_único()) {
+                                x = j;
+                                break;
+                            }
+                        }
+                        use.getLogs().add(new Log_Sistema(CIN, "El usuario de mantemiento hizo log in",
+                                new Date(), u));
+                        atms.get(x).getLogs().add(new Log_Sistema(CIN, "El usuario de mantemiento hizo log in",
+                                new Date(), u));
+
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        String st = (df.format(new Date()));
+                        int h = new Date().getHours();
+                        try {
+                            File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                            FileWriter fw = null;
+                            BufferedWriter bw = null;
+                            try {
+                                fw = new FileWriter(archivo, false);
+                                bw = new BufferedWriter(fw);
+                                bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.flush();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                        }
                         break;
                     }
                 }
                 
                 if (v == false) {
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta");
+                    contmal++;
+                    if (contmal == 5){
+                        int x = 0;
+                        for (int i = 0; i < atms.size(); i++) {
+                            if (use.getID_único() == atms.get(i).getID_único()) {
+                                x = i;
+                            }
+                        }
+                        JOptionPane.showMessageDialog(jd_mantenimientos, "Advertencia, ya se ingreso 5 veces malas.");
+
+                        use.getLogs().add(new Log_Sistema("Alguien ingreso 5 veces mal la contraseña o usuario, y se tiro advertencia",
+                                new Date()));
+                        atms.get(x).getLogs().add(new Log_Sistema("Alguien ingreso 5 veces mal la contraseña o usuario, y se tiro advertencia ",
+                                new Date()));
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        String st = (df.format(new Date()));
+                        try {
+                            File archivo = new File("./LogSitema_" + st + ".txt");
+                            FileWriter fw = null;
+                            BufferedWriter bw = null;
+                            try {
+                                fw = new FileWriter(archivo, false);
+                                bw = new BufferedWriter(fw);
+                                bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                                bw.flush();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                        }
+                        contmal--;
+                    }
                     pf_pwlog.setText("");
                     tf_idlog.setText("");
                 }
@@ -429,6 +784,8 @@ public class Principal extends javax.swing.JFrame {
         this.setVisible(true);
         
         MIN = null;
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
+        cb_ATMsLog.setModel(modelo);
     }//GEN-LAST:event_jmi_LOmantenimientoActionPerformed
 
     private void jmi_LOclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_LOclienteActionPerformed
@@ -439,6 +796,8 @@ public class Principal extends javax.swing.JFrame {
         this.setVisible(true);
         
         CIN = null;
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
+        cb_ATMsLog.setModel(modelo);
     }//GEN-LAST:event_jmi_LOclienteActionPerformed
 
     private void btn_CrearATMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CrearATMMouseClicked
@@ -463,17 +822,570 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         }
-        
+
         atms.add(new ATM(tf_CATM_ubicacion.getText(), tf_CATM_mante.getText(), n, Integer.parseInt(tf_CATM_dinero.getText()),
                 jdc_ATMfab.getDate()));
+
         ATMAdmi a = new ATMAdmi("./ATM.alo");
         a.setListaATM(atms);
         a.escribirArchivo();
+        JOptionPane.showMessageDialog(jd_CrearATM, "ATM creado con exito.");
+
         tf_CATM_dinero.setText("");
         tf_CATM_mante.setText("");
         tf_CATM_ubicacion.setText("");
         jdc_ATMfab.setDate(new Date());
     }//GEN-LAST:event_btn_CATMMouseClicked
+
+    private void btn_CATM_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CATM_rMouseClicked
+        tf_CATM_dinero.setText("");
+        tf_CATM_mante.setText("");
+        tf_CATM_ubicacion.setText("");
+        jdc_ATMfab.setDate(new Date());
+
+        jd_CrearATM.setModal(false);
+        jd_CrearATM.setVisible(false);
+        this.pack();
+        this.setLocationRelativeTo(this);
+        this.setVisible(true);
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
+        cb_ATMsLog.setModel(modelo);
+    }//GEN-LAST:event_btn_CATM_rMouseClicked
+
+    private void btn_CrearCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CrearCMouseClicked
+        lb_atm.setVisible(false);
+        cb_atmsCM.setVisible(false);
+
+        this.setVisible(false);
+        jd_CrearCoM.setModal(true);
+        jd_CrearCoM.pack();
+        jd_CrearCoM.setLocationRelativeTo(this);
+        jd_CrearCoM.setVisible(true);
+        CoM = true;
+
+    }//GEN-LAST:event_btn_CrearCMouseClicked
+
+    private void btn_CoMCrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CoMCrearMouseClicked
+        int n = 100000 + random.nextInt(900000);
+        boolean v = false;
+        while (!v && CoM) {
+            for (int i = 0; i < clientes.size(); i++) {
+                if (clientes.get(i).getId_Usuario() == n) {
+                    n = 1000000 + random.nextInt(9000000);
+                    break;
+                } else if (clientes.get(i).getId_Usuario() != n && i == clientes.size() - 1) {
+                    v = true;
+                    break;
+                }
+            }
+        }
+        while (!v && !CoM) {
+            for (int i = 0; i < mantenimientos.size(); i++) {
+                if (mantenimientos.get(i).getId_Usuario() == n) {
+                    n = 1000000 + random.nextInt(9000000);
+                    break;
+                } else if (mantenimientos.get(i).getId_Usuario() != n && i == mantenimientos.size() - 1) {
+                    v = true;
+                    break;
+                }
+            }
+        }
+        if (CoM) {
+            clientes.add(new UCliente(n, jdc_naci.getDate(), jdc_afilacion.getDate(), tf_1nom.getText(), tf_2nom.getText(),
+                    tf_1apellido.getText(), tf_contra.getText(), tf_2apellido.getText()));
+
+            UClienteAdmi c = new UClienteAdmi("./Cliente.alo");
+            c.setListaCliente(clientes);
+            c.escribirArchivo();
+            JOptionPane.showMessageDialog(jd_CrearATM, "usuario cliente creado con exito.");
+        } else if (!CoM) {
+            mantenimientos.add(new UMantenimiento(n, jdc_naci.getDate(), jdc_afilacion.getDate(), tf_1nom.getText(),
+                    tf_2nom.getText(), tf_1apellido.getText(), tf_contra.getText(), tf_2apellido.getText()));
+            mantenimientos.get(mantenimientos.size() - 1).setATMs(Tatms);
+            Tatms = new ArrayList();
+
+            UMantenimientoAdmi m = new UMantenimientoAdmi("./Mantenimiento.alo");
+            m.setListaMantenimiento(mantenimientos);
+            m.escribirArchivo();
+            JOptionPane.showMessageDialog(jd_CrearATM, "usuario de mantenimineot creado con exito.");
+        }
+
+        tf_1apellido.setText("");
+        tf_1nom.setText("");
+        tf_2apellido.setText("");
+        tf_2nom.setText("");
+        tf_contra.setText("");
+        jdc_afilacion.setDate(new Date());
+        jdc_naci.setDate(new Date());
+    }//GEN-LAST:event_btn_CoMCrearMouseClicked
+
+    private void btn_CoMCrear_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CoMCrear_rMouseClicked
+        tf_1apellido.setText("");
+        tf_1nom.setText("");
+        tf_2apellido.setText("");
+        tf_2nom.setText("");
+        tf_contra.setText("");
+        jdc_afilacion.setDate(new Date());
+        jdc_naci.setDate(new Date());
+
+        jd_CrearCoM.setModal(false);
+        jd_CrearCoM.setVisible(false);
+        this.pack();
+        this.setLocationRelativeTo(this);
+        this.setVisible(true);
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
+        cb_ATMsLog.setModel(modelo);
+    }//GEN-LAST:event_btn_CoMCrear_rMouseClicked
+
+    private void btn_CrearMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CrearMMouseClicked
+        lb_atm.setVisible(true);
+        cb_atmsCM.setVisible(true);
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel(atms.toArray());
+        cb_atmsCM.setModel(modelo);
+
+        this.setVisible(false);
+        jd_CrearCoM.setModal(true);
+        jd_CrearCoM.pack();
+        jd_CrearCoM.setLocationRelativeTo(this);
+        jd_CrearCoM.setVisible(true);
+        CoM = false;
+
+
+    }//GEN-LAST:event_btn_CrearMMouseClicked
+
+    private void jmi_dineroatmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_dineroatmActionPerformed
+        int di = Integer.parseInt(JOptionPane.showInputDialog(this, "Cuanto dinero desea ingresar en el ATM: "));
+        int x = 0;
+        for (int i = 0; i < atms.size(); i++) {
+            if (use.getID_único() == atms.get(i).getID_único()) {
+                x = i;
+            }
+        }
+
+        for (int i = 0; i < MIN.getATMs().size(); i++) {
+            if (MIN.getATMs().get(i).equals(use)) {
+                JOptionPane.showMessageDialog(jd_mantenimientos, "Dinero agregado con exito.");
+                use.setDinero_cont(use.getDinero_cont() + di);
+                atms.get(x).setDinero_cont(atms.get(x).getDinero_cont() + di);
+
+                use.getLogs().add(new Log_Sistema(MIN, "El usuario de mantimiento agrego dinero al atm",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(MIN, "El usuario de mantimiento agrego dinero al atm ",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+                break;
+            } else if (i == MIN.getATMs().size() - 1 && !MIN.getATMs().get(i).equals(use)) {
+                JOptionPane.showMessageDialog(jd_mantenimientos, "Error, usted no tiene asignado este ATM.");
+
+                use.getLogs().add(new Log_Sistema(MIN, "El usuario de mantimiento trato de asignar dinero a un ATM que no es de el ",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(MIN, "El usuario de mantimiento trato de asignar dinero a un ATM que no es de el ",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }//GEN-LAST:event_jmi_dineroatmActionPerformed
+
+    private void jmi_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_ingresarActionPerformed
+        jd_clientes.setModal(false);
+        jd_clientes.setVisible(false);
+        jd_ingresarD.setModal(true);
+        jd_ingresarD.pack();
+        jd_ingresarD.setLocationRelativeTo(this);
+        jd_ingresarD.setVisible(true);
+
+        RoI = 1;
+    }//GEN-LAST:event_jmi_ingresarActionPerformed
+
+    private void jmi_retirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_retirarActionPerformed
+        jd_clientes.setModal(false);
+        jd_clientes.setVisible(false);
+        jd_ingresarD.setModal(true);
+        jd_ingresarD.pack();
+        jd_ingresarD.setLocationRelativeTo(this);
+        jd_ingresarD.setVisible(true);
+
+        RoI = 2;
+    }//GEN-LAST:event_jmi_retirarActionPerformed
+
+    private void jmi_creacCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_creacCuentaActionPerformed
+        int y = 0;
+        for (int i = 0; i < clientes.size(); i++) {
+            if (CIN.getId_Usuario() == clientes.get(i).getId_Usuario()) {
+                y = i;
+            }
+        }
+        int n = 100000 + random.nextInt(900000);
+        boolean v = false;
+        while (!v && CoM) {
+            for (int i = 0; i < clientes.size(); i++) {
+                if (clientes.get(i).getId_Usuario() == n) {
+                    n = 1000000 + random.nextInt(9000000);
+                    break;
+                } else if (clientes.get(i).getId_Usuario() != n && i == clientes.size() - 1) {
+                    v = true;
+                    break;
+                }
+            }
+        }
+        CIN.getCuentas().add(new Cuenta(n, 0, CIN.getId_Usuario()));
+        clientes.get(y).getCuentas().add(new Cuenta(n, 0, CIN.getId_Usuario()));
+        JOptionPane.showMessageDialog(jd_clientes, "Cuenta hecha con exito, el numero de cuenta es: "
+                + CIN.getCuentas().get(CIN.getCuentas().size() - 1).getNumCuenta());
+
+    }//GEN-LAST:event_jmi_creacCuentaActionPerformed
+
+    private void jmi_verEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_verEstadoActionPerformed
+        jd_clientes.setModal(false);
+        jd_clientes.setVisible(false);
+        jd_estado.setModal(true);
+        jd_estado.pack();
+        jd_estado.setLocationRelativeTo(this);
+        jd_estado.setVisible(true);
+    }//GEN-LAST:event_jmi_verEstadoActionPerformed
+
+    private void jmi_verTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_verTransActionPerformed
+        DefaultListModel modelo = (DefaultListModel) jl_transacciones.getModel();
+        for (int i = 0; i < CIN.getTransacciones().size(); i++) {
+            modelo.addElement(CIN.getTransacciones().toString());
+        }
+        jl_transacciones.setModel(modelo);
+
+        jd_clientes.setModal(false);
+        jd_clientes.setVisible(false);
+        jd_transacciones.setModal(true);
+        jd_transacciones.pack();
+        jd_transacciones.setLocationRelativeTo(this);
+        jd_transacciones.setVisible(true);
+    }//GEN-LAST:event_jmi_verTransActionPerformed
+
+    private void btn_Transacciones_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Transacciones_rMouseClicked
+        DefaultListModel modelo = (DefaultListModel) jl_transacciones.getModel();
+        modelo.removeAllElements();
+        jl_transacciones.setModel(modelo);
+
+        jd_transacciones.setModal(false);
+        jd_transacciones.setVisible(false);
+        jd_clientes.setModal(true);
+        jd_clientes.pack();
+        jd_clientes.setLocationRelativeTo(this);
+        jd_clientes.setVisible(true);
+    }//GEN-LAST:event_btn_Transacciones_rMouseClicked
+
+    private void cb_clienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_clienteItemStateChanged
+        int z = 0;
+        for (int i = 0; i < clientes.size(); i++) {
+            if (CIN.getId_Usuario() == clientes.get(i).getId_Usuario()) {
+                z = i;
+            }
+        }
+        int x = 0, y = 0;
+        for (int i = 0; i < atms.size(); i++) {
+            if (use.getID_único() == atms.get(i).getID_único()) {
+                x = i;
+                break;
+            }
+        }
+        for (int i = 0; i < CIN.getCuentas().size(); i++) {
+            if (((Cuenta) cb_cliente.getSelectedItem()).getNumCuenta() == CIN.getCuentas().get(i).getNumCuenta()) {
+                y = i;
+            }
+        }
+
+        if (RoI == 1) {
+            int di = Integer.parseInt(JOptionPane.showInputDialog(this, "Cuanto dinero desea Ingresar a cuenta"
+                    + "\nOpcion #1 100 \nOpcion #2 500 (Ingrese 1 o 2: "));
+
+            if (di == 1) {
+                CIN.getCuentas().get(y).setSaldo_disponible(CIN.getCuentas().get(y).getSaldo_disponible() + 100);
+                clientes.get(z).getCuentas().get(y).setSaldo_disponible(clientes.get(z).getCuentas().get(y).
+                        getSaldo_disponible() + 100);
+                use.setDinero_cont(use.getDinero_cont() + 100);
+                atms.get(x).setDinero_cont(atms.get(x).getDinero_cont() + 100);
+                JOptionPane.showMessageDialog(jd_ingresarD, "Se ingreso el dinero con exito.");
+
+                CIN.getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 100 del atm y de la cuenta.", new Date(), di));
+                transacciones.add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 100 del atm y de la cuenta.", new Date(), di));
+                clientes.get(z).getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 100 del atm y de la cuenta.", new Date(), di));
+                try {
+                    File archivo = new File("./Transaccion_" + transacciones.size() + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+
+                use.getLogs().add(new Log_Sistema(CIN, "El cliente agrego 100 al atm y a su cuenta",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(CIN, "El cliente agrego 100 al atm y a su cuenta",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            } else if (di == 2) {
+                CIN.getCuentas().get(y).setSaldo_disponible(CIN.getCuentas().get(y).getSaldo_disponible() + 500);
+                clientes.get(z).getCuentas().get(y).setSaldo_disponible(clientes.get(z).getCuentas().get(y).
+                        getSaldo_disponible() + 500);
+                use.setDinero_cont(use.getDinero_cont() + 500);
+                atms.get(x).setDinero_cont(atms.get(x).getDinero_cont() + 500);
+                JOptionPane.showMessageDialog(jd_ingresarD, "Se ingreso el dinero con exito.");
+
+                CIN.getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 500 del atm y de la cuenta.", new Date(), di));
+                transacciones.add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 500 del atm y de la cuenta.", new Date(), di));
+                clientes.get(z).getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se agregaron 500 del atm y de la cuenta.", new Date(), di));
+                try {
+                    File archivo = new File("./Transaccion_" + transacciones.size() + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+
+                use.getLogs().add(new Log_Sistema(CIN, "El cliente agrego 500 al atm y a su cuenta",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(CIN, "El cliente agrego 500 al atm y a su cuenta",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            }
+        } else if (RoI == 2) {
+            int di = Integer.parseInt(JOptionPane.showInputDialog(this, "Cuanto dinero desea retirar de esta cuenta"
+                    + "\nOpcion #1 100 \nOpcion #2 500 (Ingrese 1 o 2: "));
+
+            if (di == 1 && use.getDinero_cont() >= 100 && CIN.getCuentas().get(y).getSaldo_disponible() >= 100) {
+                CIN.getCuentas().get(y).setSaldo_disponible(CIN.getCuentas().get(y).getSaldo_disponible() - 100);
+                clientes.get(z).getCuentas().get(y).setSaldo_disponible(clientes.get(z).getCuentas().get(y).
+                        getSaldo_disponible() - 100);
+                use.setDinero_cont(use.getDinero_cont() - 100);
+                atms.get(x).setDinero_cont(atms.get(x).getDinero_cont() - 100);
+                JOptionPane.showMessageDialog(jd_ingresarD, "Se retiro el dinero con exito.");
+
+                CIN.getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 100 del atm y de la cuenta.", new Date(), di));
+                transacciones.add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 100 del atm y de la cuenta.", new Date(), di));
+                clientes.get(z).getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 100 del atm y de la cuenta.", new Date(), di));
+                try {
+                    File archivo = new File("./Transaccion_" + transacciones.size() + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+
+                use.getLogs().add(new Log_Sistema(CIN, "El cliente retiro 100 al atm y a su cuenta",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(CIN, "El cliente retiro 100 al atm y a su cuenta",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            } else if (di == 2 && use.getDinero_cont() >= 500 && CIN.getCuentas().get(y).getSaldo_disponible() >= 500) {
+                CIN.getCuentas().get(y).setSaldo_disponible(CIN.getCuentas().get(y).getSaldo_disponible() - 500);
+                clientes.get(z).getCuentas().get(y).setSaldo_disponible(clientes.get(z).getCuentas().get(y).
+                        getSaldo_disponible() - 500);
+                use.setDinero_cont(use.getDinero_cont() - 500);
+                atms.get(x).setDinero_cont(atms.get(x).getDinero_cont() - 500);
+                JOptionPane.showMessageDialog(jd_ingresarD, "Se retiro el dinero con exito.");
+
+                CIN.getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 500 del atm y de la cuenta.", new Date(), di));
+                transacciones.add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 500 del atm y de la cuenta.", new Date(), di));
+                clientes.get(z).getTransacciones().add(new Transaccion(CIN.getCuentas().get(y).getNumCuenta(),
+                        "Se retiraron 500 del atm y de la cuenta.", new Date(), di));
+                try {
+                    File archivo = new File("./Transaccion_" + transacciones.size() + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+
+                use.getLogs().add(new Log_Sistema(CIN, "El cliente retiro 500 al atm y a su cuenta",
+                        new Date(), u));
+                atms.get(x).getLogs().add(new Log_Sistema(CIN, "El cliente agrego 500 al atm y a su cuenta",
+                        new Date(), u));
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String st = (df.format(new Date()));
+                int h = new Date().getHours();
+                try {
+                    File archivo = new File("./LogSitema_" + st + "_" + h + ".txt");
+                    FileWriter fw = null;
+                    BufferedWriter bw = null;
+                    try {
+                        fw = new FileWriter(archivo, false);
+                        bw = new BufferedWriter(fw);
+                        bw.write(use.getLogs().get(use.getLogs().size() - 1).toString());
+                        bw.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            } else {
+                JOptionPane.showMessageDialog(jd_ingresarD, "El ATM o su cuenta no tiene suficiente dinero para retirar.");
+            }
+        }
+    }//GEN-LAST:event_cb_clienteItemStateChanged
+
+    private void btn_facturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_facturaMouseClicked
+        JOptionPane.showMessageDialog(jd_ingresarD, "Factura: \n" + transacciones.get(transacciones.size() - 1).toString());
+    }//GEN-LAST:event_btn_facturaMouseClicked
+
+    private void cb_ATMsLogItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_ATMsLogItemStateChanged
+        use = (ATM) cb_ATMsLog.getSelectedItem();
+        tf_idlog.setVisible(true);
+        pf_pwlog.setVisible(true);
+        jLabel1.setVisible(true);
+        jLabel2.setVisible(true);
+        btn_login.setVisible(true);
+        btn_CrearATM.setVisible(true);
+        btn_CrearC.setVisible(true);
+        btn_CrearM.setVisible(true);
+        System.out.println(use);
+        JOptionPane.showMessageDialog(this, "Buen Dia.");
+    }//GEN-LAST:event_cb_ATMsLogItemStateChanged
+
+    private void cb_atmsCMItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_atmsCMItemStateChanged
+        Tatms.add((ATM) cb_atmsCM.getSelectedItem());
+    }//GEN-LAST:event_cb_atmsCMItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -515,50 +1427,83 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Accion_r;
     private javax.swing.JButton btn_CATM;
     private javax.swing.JButton btn_CATM_r;
+    private javax.swing.JButton btn_CoMCrear;
+    private javax.swing.JButton btn_CoMCrear_r;
     private javax.swing.JButton btn_CrearATM;
     private javax.swing.JButton btn_CrearC;
     private javax.swing.JButton btn_CrearM;
+    private javax.swing.JButton btn_Transacciones_r;
+    private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_login;
     private javax.swing.JComboBox<String> cb_ATMsLog;
+    private javax.swing.JComboBox<String> cb_atmsCM;
+    private javax.swing.JComboBox<String> cb_cliente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDialog jd_CrearATM;
-    private javax.swing.JDialog jd_CrearC;
-    private javax.swing.JDialog jd_CrearM;
+    private javax.swing.JDialog jd_CrearCoM;
     private javax.swing.JDialog jd_clientes;
+    private javax.swing.JDialog jd_estado;
+    private javax.swing.JDialog jd_ingresarD;
     private javax.swing.JDialog jd_mantenimientos;
+    private javax.swing.JDialog jd_transacciones;
     private com.toedter.calendar.JDateChooser jdc_ATMfab;
+    private com.toedter.calendar.JDateChooser jdc_afilacion;
+    private com.toedter.calendar.JDateChooser jdc_naci;
+    private javax.swing.JList<String> jl_transacciones;
     private javax.swing.JMenuItem jmi_LOcliente;
     private javax.swing.JMenuItem jmi_LOmantenimiento;
+    private javax.swing.JMenuItem jmi_creacCuenta;
     private javax.swing.JMenuItem jmi_dineroatm;
+    private javax.swing.JMenuItem jmi_ingresar;
+    private javax.swing.JMenuItem jmi_retirar;
+    private javax.swing.JMenuItem jmi_verEstado;
+    private javax.swing.JMenuItem jmi_verTrans;
+    private javax.swing.JLabel lb_atm;
     private javax.swing.JPasswordField pf_pwlog;
+    private javax.swing.JTextField tf_1apellido;
+    private javax.swing.JTextField tf_1nom;
+    private javax.swing.JTextField tf_2apellido;
+    private javax.swing.JTextField tf_2nom;
     private javax.swing.JTextField tf_CATM_dinero;
     private javax.swing.JTextField tf_CATM_mante;
     private javax.swing.JTextField tf_CATM_ubicacion;
+    private javax.swing.JTextField tf_contra;
     private javax.swing.JTextField tf_idlog;
     // End of variables declaration//GEN-END:variables
     ArrayList<ATM> atms = new ArrayList();
+    ArrayList<ATM> Tatms = new ArrayList();
     ArrayList<UCliente> clientes = new ArrayList();
     ArrayList<UMantenimiento> mantenimientos = new ArrayList();
+    ArrayList<Transaccion> transacciones = new ArrayList();
     ATM use;
     UCliente CIN;
     UMantenimiento MIN;
     boolean u = false;
     Random random = new Random();
+    boolean CoM = false; // true = clientes y false = mantenimiento
+    int RoI = 0;
+    int contmal = 0;
 }
